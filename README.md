@@ -5,7 +5,7 @@
 
 ### Lab 2 - Understanding and Editing Layout
 
-##### *Peter Cheung, v1.0 - 9 October 2025*
+##### *Peter Cheung, v1.3 - 10 October 2025*
 
 ---
 ### Objectives
@@ -18,6 +18,11 @@ By the end of this laboratory session, you should be able to do the following.
 * Use Cadence's Virtuoso tool to perform manual routing.
 * Use Cadence's Calibre tool to verify that your layout obeys design rules through DRC.
 * Use Cadence's Calibre tool to verify that your layout is the same as the schematic.
+
+>Due to the length of this laboratory experiment, Lab 2 is now divided into Part 1 and Part 2:  
+>* Part 1 (Tasks 1 & 2) is about understanding the layout of a VLSI circuit. 
+>* Part 2 (Tasks 3 to 5) is about using Cadence's Virtuoso layout editor to create and modify a layout.
+
 
 ---
 ### Task 1 - Deep Dive into Inverter Layout (30 minutes)
@@ -153,8 +158,8 @@ To successfully important the Verilog netlist from Lab 1, follow the steps below
 5. Now go to **_"Global Net Options"_** menu at the top to change the dialogue box contents.
 6. Delete the "!" characters in the power net names to "VDD" and "VSS".
 7. Click OK to important the Verilog netlist and generate a schematic diagram.
-    
-8.  Use the **_"f"_** short-cut to fit the entire schematic in the newly opened window.
+8. Use **_Tool -> Library Manager_** on the main message window to open the schematic view of the lfsr circuit.
+9.  Use the **_"f"_** short-cut to fit the entire schematic in the newly opened window.
 
 You should see the schematic circuit for the placed-and-routed LFSR4 module from Lab 1 as below.
    
@@ -223,7 +228,7 @@ The result of this floorplanning step is shown in the diagram below.
 
 **_Step 6: Manual Placement_**
 
-The next step is to place each cell at the **_final precise location_**. This action needs to be extremely precise and require you to use the mouse to zoom into regions of the layout with the scroll wheel so that all geometric features are clearly seen.  
+The next step is to place each cell at the **_final precise location_**. This action needs to be extremely precise and requires you to use the mouse to zoom into regions of the layout with the scroll wheel so that all geometric features are clearly seen.  
 
 The most useful command here is **"a"**, the align command.  Place the left-most cell (the delay cell) abutting the inverter cell:
 1. Zoom into the top right corner of the left-most cell with the mouse scroll wheel while the cursor is at the location you want to zoom.
@@ -234,7 +239,7 @@ The most useful command here is **"a"**, the align command.  Place the left-most
 6. Select the delay cell again and press **"a"**.  Then click on the thinner purple verticle line of the delay cell as the source location.  This verticle line marks the PnR boundry of the delay cell for abutment.
 7. Click on the purple line on the inverter cell. This will move the right boundary of the delay cell to the left boundary of the inverter. 
 
->Note that you can move cells closer together by drawing a rectangular box around a bunch of cells to select them and drag the group to a new location. This allows you to see two cells in the same window for ease of alignment. 
+>Note that you can move cells closer together by drawing a rectangular box around several cells to select them  and drag the group to a new location. This allows you to see two cells in the same window for ease of alignment. 
 
 You have now successfully placed two cells together.  Repeat this for all cells to form a perfectly aligned and placed line of standard cells as shown below.
 
@@ -242,7 +247,7 @@ You have now successfully placed two cells together.  Repeat this for all cells 
 
 <p align="center"> <img src="diagrams/placement.jpg" width="1200" height="100"> </p><BR>
 
-Before we finish this placement step, we need to add to both ends of this layout a **tap cell**.  The tap cell connects the n-well (for p-type transistors) to the VDD power rail, and the p-well (for n-type transistors) to VSS (i.e. GND). Tap cells are NOT included in the Verilog netlist.  In Lab 1, you instructed ***_Innovus_** to add tap cells this automatically with the **_"Addwelltap"_** command. Here you are doing this manually.
+Before we finish this placement step, we need to add to both ends of this layout a **tap cell**.  The tap cell connects the n-well (for p-type transistors) to the VDD power rail, and the p-well (for n-type transistors) to VSS (i.e. GND). Tap cells are NOT included in the Verilog netlist and therefore they are not automatically included.  In Lab 1, you instructed ***_Innovus_** to add tap cells automatically with the **_"Addwelltap"_** command. Here you are doing this manually.
 
 Use the **"i"**  command to insert an instance. This will pop up a **"Create Instance"** dialogue box. Fill this in as shown below:
 
@@ -252,11 +257,11 @@ Now place a tap cell on each end of the row of cells to provide connections to V
 
 **_Step 7: Design Rule Check (DRC) on the Placement_**
 
-To make sure that your placement effort has not violated any design rules (e.g. misaligning a cell relative to its neighbour), you should now use the **_Calibre_** verification tool to perform a design rule check (DRC) on this layout so far.
+To make sure that your placement effort has not violated any design rules (e.g. misaligning a cell relative to its neighbour), you should now use the **_Calibre_** verification tool to perform a design rule check (DRC) on the layout so far.
 
 1. In the layout window, use the command **_Calibre -> run nmDRC_** to bring up the Calibre DRC dialogue box.
 2. Click the **_Rules_** tab.
-3. Enter the DRC rules location: **_/usr/local/cadence/kits/tsmc/65n_LP/Calibre/drc/calibre_density_off.drc_**.
+3. Enter the DRC rules file location: **_/usr/local/cadence/kits/tsmc/65n_LP/Calibre/drc/calibre_density_off.drc_**.
 4. Click **LOAD** button to load it into your working environment.
 5. Specify where the lfsr4 layout is stored.
 6. Click the **RUN** button on the left.
@@ -274,12 +279,12 @@ The next task is to connect all these cells according to the following wiring di
 
 <p align="center"> <img src="diagrams/lfsr_wires.jpg" width="800" height="200"> </p><BR>
 
-The floorplan of this circuit was designed to minimize the length of wires to connect up the circuit.
+The floorplan of this circuit was designed to minimize the length of wires to connect the circuit.
 
 There are three type of connections:
 1. **Neighbourhood wires** (black) - These are the easy connections between the output of one cell on the right boundary to the input of the next cell on the left boundary.  They can be wired up using ONLY metal 1 (M1) without requiring any vias.  
-2. **Clock & control wires** (red) - These are wires that control flip-flops.  In Lab 1 PnR process, clock tree synthesis came before routing.  Here you should wire up the clock signal before the reset signals. 
-3. **Signal wires** (blue) - These are internal wires that connect cells that are not conveniently located and will have to go out to the routing channel via metal 2 layer (M2).
+2. **Clock & control wires** (red) - These are wires that control flip-flops.  In Lab 1 PnR process, clock tree synthesis came before routing.  Here you should wire up the clock signal then the reset signal. 
+3. **Signal wires** (blue) - These are internal wires that connect cells that are not conveniently located and will have to go out to the routing channel using the metal 2 layer (M2).
 
 Before you start to hand route the circuit, discuss with your lab partner the wiring up strategy. You should also be aware of the design rule that you need to follow.  You can find out the exact rules for the TSMC process you are using.  These rules are propietary and therefore cannot be included here.  However, the table below is generated with the help of ChatGPT and is in the public domain. They are guidelines only and available for educational purpose.  The exact rules can be found in the documentation section of the PKD. 
 
@@ -287,29 +292,29 @@ Before you start to hand route the circuit, discuss with your lab partner the wi
 
 <p align="center"> <img src="diagrams/design_rules.jpg" width="600" height="350"> </p><BR>
 
-**_Step 1: Practice layout editing for wiring_**
+**_Step 1: Practise layout editing for wiring_**
 
-Manually connecting a circuit is tedious and easy to make an error. However, it is also a vital skill to learn in full-custom VLSI design.  Before you wire up the circuit, this step is to learn how to create wires of certain dimension and check for DRC violations each step of the way.
+Manually connecting a circuit is tedious and mistakes are easily made. However, it is also a vital skill to learn in full-custom VLSI design.  Before you wire up the circuit, this step helps you learn how to create wires of certain dimension and check for DRC violations each step of the way.
 
 * Turn on realtime rule checking with the command: **_Option -> DRD Edit_**, and Tick **_Notify Enabled_**.
-* In the layout window and away from the row of placed cells, draw a M1 rectangle of arbitrary size using the **"r"** command after selecting M1 layer.
-* Select the M1 rectangle and use the **"q"** command to bring up the property dialogue box (for this rectangle).
+* In the layout window and away from the row of placed cells, draw a  rectangle of arbitrary size in M1 using the **"r"** command after selecting M1 layer.
+* Select the rectangle and use the **"q"** command to bring up the property dialogue box (for this rectangle).
 * Change the rectangle size to: height = 0.1, width = 0.5. The unit is in micron.
 * Draw another rectangle close by and you will see how the realtime DRC works as shown below.
 * In the layer selection window, turn on all valid layers and select M2 drw layer. Create a verticle M2 wire of dimension 0.1 x 0.3. Align the M1 and M2 wire as shown.  These two wire represent a typing signal from a standard cell being routed to elsewhere in the routing channel.
 * Select the M2 wire and use the **_o_** command to create a via.  A **_Create Via_** dialogue window will pop up. Select the **_Auto_** mode as shown.
-* Click on the overlap betwween M1 and M2 wires to indicate that this is where you want a M1 to M2 via should be created.
+* Click on the overlap between M1 and M2 wires to indicate that this is where you want a M1 to M2 via should be created.  Note that this automatic via creation feature will insert as many via into the common M1-M2 region as possible.
   
-You have now successfully connecting vertical M2 wire to a horizontal M1 wire. 
+You have now successfully connecting the vertical M2 wire to a horizontal M1 wire. 
 
 > Use **_"k"_** command to measure all the dimension and label this simple layout segment with the measured dimensions.  You can remove the measurements with **_SHIFT-k_**.
-> Leave this exercise layers in place, so that you can see the used layers that include M2 layer.  Delete this exercise wires after the routing is completed.
+> Leave this exercise wires in place, so that you can see the used layers that include M2 layer.  Delete this exercise wires after the routing is completed. Now show in layer palett only the used layers.
 
 <p align="center"> <img src="diagrams/M1M2via.jpg" width="800" height="450"> </p><BR>
 
 **_Step 2: Connecting Neighbouring wires_**
 
-There is only one neighbourhood wires, one from output of the delay cell to the inverter.  
+There is only one neighbourhood wires from the output of the delay cell to the inverter.  
 * Identify the local of the output pin Z of the delay cell and the input pin I of the inverter cell.
 * Select the layer to draw - in this case, M1.
 * Use the **_"r"_** shortcut command and draw a M1 rectangle overlapping the two M1 pins.  Make sure that you obey the design rules shown in the table.
@@ -321,20 +326,20 @@ There is only one neighbourhood wires, one from output of the delay cell to the 
 * Indentify all the clock pins for the flip-flops (CP).
 * Draw a horizontal wire in M1 for the clock signal above (or below) the row of cells. Ensure that the wire is at least minimum width and distance from the power M1 wire.
 * Place M2 onto the CP pins for all four flip-flops, covering both the M1-poly via and the M1 pin metal. 
-* Add M1-M2 vias using the method you practised before at the CP pin locations.
+* Add M1-M2 vias using the method you practised earlier at the CP pin locations.
 * Connect the CP pins using M2 wire to the M1 horizontal wire in the routing channel you created earlier.
-* Add M1-M2 vias connecting the M2 wire to the horizontal clock wire.
+* Add M1-M2 vias connecting the M2 wire to the horizontal M1 clock wire.
 * Do another DRC check.
 
 **_Step 3: Routing the reset signal_**
 
 * Create M1 horizontal wire for the reset signal.
 * Connect the resest signals of each flip-flop to the reset wire as in the clock signal.
-* Do another DC check.
+* Do another DRC check.
 
 **_Step 4: Wire up the internal signals_**
 
-There are several internal signals including four output siganls Q[4:1].  Note that Cadence uses the syntax Q<4:1> instead. Wire these as you see fit.  Bring the four output signals to the right of the row of cells.
+There are several internal signals including four output siganls Q[4:1].  Note that Cadence uses the syntax Q<4:1> a bus signal. Wire these as you see fit.  Bring the four output signals to the right of the row of cells.
 
 **_Step 5: Connect the pins_**
 
@@ -344,8 +349,10 @@ Somewhere on the layout are all the pins (ports) associated with LFSR4. Place th
 
 The final task is to confirm that the layout you created implements the circuit specified by the imported schematic. The steps are similar to DRC. 
 
-* Use the command: **_Calibre -> nmLVS>** to bring up the LVS dialogue window.
+* Use the command: **_Calibre -> nmLVS>** to bring up the LVS dialogue box.
 * Enter the location of LVS rule file as: **_/usr/local/cadence/kits/tsmc/65n_LP/Calibre/lvs/calibre.lvs_** and press **_LOAD_**.
+* Select **_LVS Options → Database → Library → additional SPICE Files_**
+* Add *_“/usr/local/cadence/kits/tsmc/beLibs/65nm/TSMCHOME/digital/Back_End/spice/tcbn65lpbwp7t_141a/tcbn65lpbwp7t_141a.spi”_*.
 * Run LVS and there should be no error.
 
-Since the layout matches that of the schematic, which was imported from Lab 1 and was previously verified to be functionally correct through simulation, we are confident that this LFSR4 layout works as intended.
+Since the layout matches   the schematic, which was imported from Lab 1 and was previously verified to be functionally correct through simulation, we are confident that this LFSR4 layout works as intended.
