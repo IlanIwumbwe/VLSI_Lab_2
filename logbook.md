@@ -34,17 +34,6 @@
 
 **prBndry (PR Boundary)**
 - Cell boundary definition
-- Defines where cells abut in row-based placement
-
-**Text**
-- Non-fabricated annotation layer for labels
-
-### Why Layout Layers ≠ Fabrication Masks
-
-CAD tools use intuitive layers for designers, then merge them during "tape-out":
-- All active regions (OD) combined into one mask
-- N-well derived from P+ diffusion locations
-- Reduces mask count and simplifies manufacturing
 
 ---
 
@@ -141,6 +130,7 @@ Optimal order: DFF1 → XOR → DFF2 → DFF3 → DFF4 → XOR
 
 
 <img width="1239" height="529" alt="image" src="https://github.com/user-attachments/assets/5e98bad5-9696-4fde-b061-13ec4c4a0f65" />
+
 
 
 
