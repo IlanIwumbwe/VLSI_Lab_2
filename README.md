@@ -39,8 +39,8 @@
 
 ## Task 2 - XOR Gate Circuit Extraction
 
-<img width="1514" height="415" alt="image" src="https://github.com/user-attachments/assets/d573ed1e-5f6a-43a1-87e3-c5f207082e48" />
 
+<img width="1920" height="1440" alt="image" src="https://github.com/user-attachments/assets/4a4206b5-a471-49cc-8f8e-bc90caf136b4" />
 
 ### CKXOR2D0BWP7T Layout Analysis
 
@@ -71,6 +71,7 @@ see drawing above
 
 ## Task 3 - Manual Placement
 
+<img width="1514" height="415" alt="image" src="https://github.com/user-attachments/assets/d573ed1e-5f6a-43a1-87e3-c5f207082e48" />
 
 <img width="1402" height="237" alt="image" src="https://github.com/user-attachments/assets/93d3518e-653d-498b-91ec-719555eecee3" />
 
@@ -94,7 +95,8 @@ Optimal order: DFF1 → XOR → DFF2 → DFF3 → DFF4 → XOR
 
 ## Task 4 - Routing
 
-<img width="1920" height="1440" alt="image" src="https://github.com/user-attachments/assets/4a4206b5-a471-49cc-8f8e-bc90caf136b4" />
+<img width="1388" height="222" alt="image" src="https://github.com/user-attachments/assets/83123e37-ec22-4e8e-844a-69e92e6d169e" />
+
 
 ### Clock Routing
 1. Horizontal M1 trunk above/below cells
@@ -128,6 +130,7 @@ Optimal order: DFF1 → XOR → DFF2 → DFF3 → DFF4 → XOR
 
 
 <img width="1239" height="529" alt="image" src="https://github.com/user-attachments/assets/5e98bad5-9696-4fde-b061-13ec4c4a0f65" />
+
 
 
 
