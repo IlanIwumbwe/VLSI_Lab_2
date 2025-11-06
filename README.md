@@ -39,8 +39,8 @@
 
 ## Task 2 - XOR Gate Circuit Extraction
 
+<img width="1514" height="415" alt="image" src="https://github.com/user-attachments/assets/d573ed1e-5f6a-43a1-87e3-c5f207082e48" />
 
-![hell](https://github.com/user-attachments/assets/ec957cd4-83ee-4cbe-a72c-a3a53aed4db1)
 
 ### CKXOR2D0BWP7T Layout Analysis
 
@@ -71,7 +71,6 @@ see drawing above
 
 ## Task 3 - Manual Placement
 
-<img width="1514" height="415" alt="image" src="https://github.com/user-attachments/assets/d573ed1e-5f6a-43a1-87e3-c5f207082e48" />
 
 <img width="1402" height="237" alt="image" src="https://github.com/user-attachments/assets/93d3518e-653d-498b-91ec-719555eecee3" />
 
@@ -129,6 +128,7 @@ Optimal order: DFF1 → XOR → DFF2 → DFF3 → DFF4 → XOR
 
 
 <img width="1239" height="529" alt="image" src="https://github.com/user-attachments/assets/5e98bad5-9696-4fde-b061-13ec4c4a0f65" />
+
 
 
 
